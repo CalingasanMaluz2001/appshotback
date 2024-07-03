@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import maluy.appshots.Model.Product;
 import maluy.appshots.NotFoundException.ProductNotFoundException;
-import maluy.appshots.NotFoundException.UserNotFoundException;
 import maluy.appshots.Repository.ProductRepository;
 
 @RestController
@@ -35,7 +34,7 @@ public class ProductController {
     @GetMapping("/product/{id}")
      public Product getProduct(@PathVariable Long id){
      return repo.findById(id)
-     .orElseThrow(()->  new UserNotFoundException(id));
+     .orElseThrow(()->  new ProductNotFoundException(id));
      }
 
     // http: //127.0.0.1:8080/product/new
