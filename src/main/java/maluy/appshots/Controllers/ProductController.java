@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import maluy.appshots.Model.Product;
@@ -15,6 +16,7 @@ import maluy.appshots.NotFoundException.ProductNotFoundException;
 import maluy.appshots.Repository.ProductRepository;
 
 @RestController
+@RequestMapping("/api/v1/product")
 public class ProductController {
 
     ProductRepository repo;
@@ -25,20 +27,20 @@ public class ProductController {
 
     // http: //127.0.0.1/products
     // Get all Products
-    @GetMapping("/products")
+    @GetMapping("/all")
     public List<Product> getProducts() {
         return repo.findAll();
     }
       
     //http://127.0.0.1:8080/product/2
-    @GetMapping("/product/{id}")
+    @GetMapping("/{id}")
      public Product getProduct(@PathVariable Long id){
      return repo.findById(id)
      .orElseThrow(()->  new ProductNotFoundException(id));
      }
 
     // http: //127.0.0.1:8080/product/new
-    @PostMapping("/product/new")
+    @PostMapping("/new")
     public String addProduct(@RequestBody Product newProduct) {
         repo.save(newProduct);
         return "A new Product is added. Yey!";
@@ -47,7 +49,7 @@ public class ProductController {
 
     // UPDATE ENDPOINTS
     // http://127.0.0.1:8080/products/edit/1
-    @PutMapping("/product/edit/{id}")
+    @PutMapping("/edit/{id}")
     public Product updateProduct(@PathVariable Long id,
             @RequestBody Product newProduct) {
         return repo.findById(id)
@@ -63,7 +65,7 @@ public class ProductController {
 
     // DELETE ENDPOINTS
     // http://127.0.0.1:8080/products/delete/1
-    @DeleteMapping("/product/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         repo.deleteById(id);
         return "A product is deleted";
