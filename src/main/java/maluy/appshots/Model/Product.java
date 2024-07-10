@@ -12,6 +12,7 @@ public class Product {
     private String productName;
     private String description;
     private double price;
+    
 
     Product(){}
     
